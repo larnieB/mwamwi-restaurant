@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mwamwi Hotel — Thika</title>
+  <meta name="description" content="Mwamwi Hotel in Thika. Contact, location, interactive menu and quick WhatsApp chat." />
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: { 500: '#2eb872', 600: '#22a364' },
+            ink: { 900: '#0b1020' }
+          },
+          boxShadow: {
+            soft: '0 10px 30px rgba(0,0,0,0.15)',
+            glow: '0 0 40px rgba(46,184,114,0.4)'
+          },
+          backgroundImage: {
+            hero: 'radial-gradient(1000px 500px at 10% -10%, rgba(46,184,114,0.15), transparent 40%), radial-gradient(900px 400px at 115% 20%, rgba(34,163,100,0.10), transparent 45%)'
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- GSAP for subtle hero animation -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    ::selection { background: rgba(46,184,114,.25); }
+
+    /* Menu carousel */
+    .menu-track {
+      display: flex;
+      gap: 1.5rem;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 1rem;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255,255,255,0.2) transparent;
+    }
+    .menu-track::-webkit-scrollbar {
+      height: 8px;
+    }
+    .menu-track::-webkit-scrollbar-thumb {
+      background: rgba(255,255,255,0.2);
+      border-radius: 4px;
+    }
+    .menu-card {
+      min-width: 250px;
+      flex: 0 0 auto;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 1.25rem;
+      overflow: hidden;
+      scroll-snap-align: center;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+    .menu-card:hover {
+      transform: translateY(-6px) scale(1.03);
+      box-shadow: 0 12px 40px rgba(46,184,114,0.25);
+    }
+    .menu-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+    .menu-card .info {
+      padding: 1rem;
+      text-align: center;
+    }
+    @keyframes scrollMenu {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    @media (max-width: 640px) {
+      .menu-card { min-width: 80%; }
+      .menu-card img { height: 180px; }
+    }
+  </style>
+</head>
+
+<body class="bg-ink-900 text-white">
+  <!-- NAV -->
+  <header class="sticky top-0 z-50 backdrop-blur bg-ink-900/70 border-b border-white/10">
+    <nav class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-lg bg-brand-500/15 grid place-items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l9 4v6c0 5-4 9-9 10C7 21 3 17 3 12V6l9-4z"/></svg>
+        </div>
+        <span class="font-semibold tracking-wide">Mwamwi Hotel</span>
+      </div>
+      <div class="hidden md:flex items-center gap-6 text-sm">
+        <a href="#about" class="hover:text-brand-500">About</a>
+        <a href="#menu" class="hover:text-brand-500">Menu</a>
+        <a href="#contact" class="hover:text-brand-500">Contact</a>
+      </div>
+      <a href="#contact" class="px-3 py-1.5 rounded-lg bg-brand-500 hover:bg-brand-600 text-sm font-medium">Book / Contact</a>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="bg-hero">
+    <div class="max-w-6xl mx-auto px-4 py-20 md:py-28 grid md:grid-cols-2 gap-10 items-center">
+      <div>
+        <h1 class="text-4xl md:text-6xl font-extrabold leading-tight">
+          Welcome to <span class="text-brand-500">Mwamwi Hotel</span><br/>
+          <span class="text-white/80">Thika</span>
+        </h1>
+        <p class="mt-5 text-white/70 max-w-xl">
+          Comfort, great food, and warm Kenyan hospitality in the heart of Thika.
+          Explore our curated menu and chat with us instantly for directions, offers, or reservations.
+        </p>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a href="#menu" class="px-4 py-2 rounded-lg bg-white/10 hover:bg-white/15 border border-white/10">View Menu</a>
+          <a href="https://wa.me/254762025214?text=Hello%20Mwamwi%20Hotel!%20I%20would%20like%20to%20book%20/%20ask%20a%20question."
+             class="px-4 py-2 rounded-lg bg-brand-500 hover:bg-brand-600">WhatsApp Us</a>
+        </div>
+        <div class="mt-6 text-sm text-white/60">📍 Kenyatta Highway, Thika — Kenya</div>
+      </div>
+      <div class="relative">
+        <div class="rounded-2xl border border-white/10 p-6 shadow-soft bg-white/5">
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 rounded-xl bg-brand-500/20 grid place-items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-width="1.5" d="M8 7h8M6 11h12M4 15h16"/></svg>
+            </div>
+            <div>
+              <div class="font-semibold">Chef’s Highlights</div>
+              <div class="text-white/60 text-sm">Tap “Menu” below to explore</div>
+            </div>
+          </div>
+          <div class="mt-6 grid grid-cols-3 gap-3">
+            <div class="aspect-square rounded-xl bg-white/10"></div>
+            <div class="aspect-square rounded-xl bg-white/10"></div>
+            <div class="aspect-square rounded-xl bg-white/10"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="max-w-6xl mx-auto px-4 py-16">
+    <div class="grid md:grid-cols-2 gap-10 items-center">
+      <div>
+        <h2 class="text-2xl md:text-3xl font-bold">A stay you’ll remember</h2>
+        <p class="mt-3 text-white/70">
+          Mwamwi Hotel blends comfort with culinary excellence. Whether you’re here for business or leisure,
+          our team is ready to make your Thika visit delightful — with rooms, conference space, and a kitchen
+          that celebrates local flavors.
+        </p>
+      </div>
+      <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+        <ul class="grid grid-cols-2 gap-4 text-sm">
+          <li class="flex items-center gap-2"><span class="text-brand-500">•</span> Free Wi-Fi</li>
+          <li class="flex items-center gap-2"><span class="text-brand-500">•</span> Secure Parking</li>
+          <li class="flex items-center gap-2"><span class="text-brand-500">•</span> Conference Hall</li>
+          <li class="flex items-center gap-2"><span class="text-brand-500">•</span> Room Service</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- MENU (New Carousel Design) -->
+  <section id="menu" class="max-w-6xl mx-auto px-4 py-20">
+    <div class="text-center mb-10">
+      <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight">Our Signature Dishes</h2>
+      <p class="text-white/70 mt-2">Swipe or scroll to explore our top picks</p>
+    </div>
+
+    <div class="menu-track">
+      <div class="menu-card">
+        <img src="assets/dishes/nyama choma.jpeg" alt="Nyama Choma" />
+        <div class="info">
+          <h3 class="font-semibold">Nyama Choma</h3>
+          <p class="text-brand-500">KES 900</p>
+        </div>
+      </div>
+      <div class="menu-card">
+        <img src="assets/dishes/grilled chiken.jpeg" alt="Grilled Chicken" />
+        <div class="info">
+          <h3 class="font-semibold">Grilled Chicken</h3>
+          <p class="text-brand-500">KES 650</p>
+        </div>
+      </div>
+      <div class="menu-card">
+        <img src="assets/dishes/pilau.jpeg" alt="Pilau" />
+        <div class="info">
+          <h3 class="font-semibold">Pilau</h3>
+          <p class="text-brand-500">KES 500</p>
+        </div>
+      </div>
+      <div class="menu-card">
+        <img src="assets/dishes/tilapia.jpeg" alt="Tilapia Fry" />
+        <div class="info">
+          <h3 class="font-semibold">Tilapia Fry</h3>
+          <p class="text-brand-500">KES 850</p>
+        </div>
+      </div>
+      <div class="menu-card">
+        <img src="assets/dishes/ugali.jpeg" alt="Ugali & Greens" />
+        <div class="info">
+          <h3 class="font-semibold">Ugali & Greens</h3>
+          <p class="text-brand-500">KES 220</p>
+        </div>
+      </div>
+      <div class="menu-card">
+        <img src="assets/dishes/fruit salad.jpeg" alt="Fruit Salad" />
+        <div class="info">
+          <h3 class="font-semibold">Fruit Salad</h3>
+          <p class="text-brand-500">KES 300</p>
+        </div>
+      </div>
+      <div class="menu-card">
+        <img src="assets/dishes/samosa.jpeg" alt="Samosa" />
+        <div class="info">
+          <h3 class="font-semibold">Samosa</h3>
+          <p class="text-brand-500">KES 100</p>
+        </div>
+      </div>
+      <div class="menu-card">
+        <img src="assets/dishes/chapati.jpg" alt="Chapati" />
+        <div class="info">
+          <h3 class="font-semibold">Chapati</h3>
+          <p class="text-brand-500">KES 80</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="max-w-6xl mx-auto px-4 py-16">
+    <div class="rounded-2xl border border-white/10 bg-white/5 p-6 md:p-8">
+      <h2 class="text-2xl md:text-3xl font-bold">Contact & Location</h2>
+      <div class="grid md:grid-cols-3 gap-6 mt-6">
+        <div>
+          <div class="text-white/60 text-sm uppercase tracking-wider">Address</div>
+          <div class="mt-2">Kenyatta Highway, Thika<br/>Kiambu County, Kenya</div>
+        </div>
+        <div>
+          <div class="text-white/60 text-sm uppercase tracking-wider">Phone / WhatsApp</div>
+          <div class="mt-2">
+            <a class="text-brand-500 hover:text-brand-600" href="tel:+254762025214">+254 762 025 214</a><br/>
+            <a class="text-brand-500 hover:text-brand-600" href="https://wa.me/254762025214?text=Hello%20Mwamwi%20Hotel!">Open WhatsApp chat</a>
+          </div>
+        </div>
+        <div>
+          <div class="text-white/60 text-sm uppercase tracking-wider">Email</div>
+          <div class="mt-2">
+            <a class="text-brand-500 hover:text-brand-600" href="mailto:info@mwamwihotel.co.ke">info@mwamwihotel.co.ke</a>
+          </div>
+        </div>
+      </div>
+      <div class="mt-6 grid md:grid-cols-2 gap-4 text-sm text-white/70">
+        <div>🕒 Hours: Mon–Sun, 7:00 AM – 10:30 PM</div>
+        <div>🅿️ Guest Parking available • Free Wi-Fi</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-white/10">
+    <div class="max-w-6xl mx-auto px-4 py-8 text-sm text-white/60 flex flex-wrap items-center justify-between gap-4">
+      <div>© <span id="year"></span> Mwamwi Hotel — Thika</div>
+      <div>Made with ❤ in Kenya</div>
+    </div>
+  </footer>
+
+  <!-- WhatsApp FAB -->
+  <a class="fixed left-4 bottom-4 w-14 h-14 rounded-full bg-[#25D366] text-white grid place-items-center shadow-lg hover:scale-110 transition"
+     href="https://wa.me/254762025214?text=Hello%20Mwamwi%20Hotel!%20I%20would%20like%20to%20book%20/%20ask%20a%20question.">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867..."/></svg>
+  </a>
+
+  <!-- Chatbot -->
+  <button class="fixed right-4 bottom-4 px-4 py-2 rounded-full bg-white/10 hover:bg-white/15 border border-white/10" id="chatToggle">
+    Chat with us
+  </button>
+  <div class="chat-card" id="chatCard">
+    <div class="px-4 py-3 border-b border-white/10 flex items-center justify-between">
+      <div class="font-semibold">Mwamwi Assistant</div>
+      <button id="closeChat" class="text-white/70 hover:text-white text-sm">✕</button>
+    </div>
+    <div class="chat-log" id="chatLog"></div>
+    <form id="chatForm" class="p-2 border-t border-white/10 flex items-center gap-2">
+      <input id="chatInput" required class="flex-1 bg-white/10 border border-white/10 rounded-lg px-3 py-2 text-sm outline-none focus:border-brand-500" placeholder="Ask about location, menu, price..." />
+      <button class="px-3 py-2 text-sm rounded-lg bg-brand-500 hover:bg-brand-600">Send</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    const chatCard = document.getElementById('chatCard');
+    const chatToggle = document.getElementById('chatToggle');
+    const closeChat = document.getElementById('closeChat');
+    const chatForm = document.getElementById('chatForm');
+    const chatInput = document.getElementById('chatInput');
+    const chatLog = document.getElementById('chatLog');
+    const replies = [
+      {keys:['hello','hi','hey'],text:'Hi! How can I help you today?'},
+      {keys:['location','where'],text:'We are located along Kenyatta Highway, Thika.'},
+      {keys:['menu','food'],text:'Our top dishes include Nyama Choma, Grilled Chicken, Tilapia, Pilau, and Chapati.'},
+      {keys:['price','cost'],text:'Chapati KES 80, Pilau KES 500, Tilapia KES 850, Nyama Choma KES 900.'},
+      {keys:['contact','phone'],text:'+254 762 025 214 or info@mwamwihotel.co.ke'},
+      {keys:['hours','open'],text:'We’re open daily 7:00 AM – 10:30 PM.'},
+    ];
+    function addMsg(text, who='bot'){
+      const div=document.createElement('div');
+      div.className='msg '+who;
+      div.innerText=text;
+      chatLog.appendChild(div);
+      chatLog.scrollTop=chatLog.scrollHeight;
+    }
+    function reply(q){
+      q=q.toLowerCase();
+      for(const r of replies){if(r.keys.some(k=>q.includes(k)))return r.text;}
+      return "I can help with location, menu, or bookings!";
+    }
+    chatToggle.onclick=()=>{chatCard.classList.toggle('open');if(chatCard.classList.contains('open')&&chatLog.childElementCount===0){addMsg('Karibu! Ask about our location, menu, or booking.')}};
+    closeChat.onclick=()=>chatCard.classList.remove('open');
+    chatForm.onsubmit=e=>{e.preventDefault();const q=chatInput.value.trim();if(!q)return;addMsg(q,'user');chatInput.value='';setTimeout(()=>addMsg(reply(q),'bot'),400);}
+  </script>
+</body>
+</html>
